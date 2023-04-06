@@ -16,6 +16,8 @@ public class CartService {
     CartRepository cartRepository;
     @Autowired
     ItemRepository itemRepository;
+    @Autowired
+    ItemService itemService;
 
     /* @Autowired
       public CartService(CartRepository cartRepository){
@@ -25,40 +27,85 @@ public class CartService {
         return cartRepository.findAll();
     }
 
+//    public List<Item> getItemFromCart(foodId){}
 
 
-    public Cart getCartById(long Id){
+  /*  public Cart getCartById(int Id) {
 
-        Optional<Cart> fooditemOptional = cartRepository.findById(Id);
+        Optional<Cart> fooditemOptional = cartRepository.findById(id);
         Cart cartItem = fooditemOptional.get();
         return cartItem;
-    }
+    }*/
 
 
     public Cart createCart(Cart cart) {
         return cartRepository.save(cart);
     }
 
-    public Cart addItemToCart(Long cartId, Long itemId) throws Exception {
-        Cart cart = getCartById(cartId);
-        Item item = itemRepository.findById(itemId)
-                .orElseThrow(() -> new Exception("Item not found with id " + itemId));
+    public Cart addToCart(int foodId) {
 
-        cart.getItems().add(item);
-        cart.setTotalPrice(cart.getTotalPrice() + item.getPriceOfItem());
+        Item items = itemService.getItemById(foodId);
+        Cart cart = new Cart(items);
 
-        return cartRepository.save(cart);
+        if (items == null) {
+            return null;
+        } else
+
+            return cartRepository.save(cart);
+    }
+
+  /*  public void deleteCart(int Id) {
+
+        cartRepository.deleteById(Id);
     }
 
 
-    public Cart removeItemFromCart(Long cartId, Long itemId) throws Exception {
-        Cart cart = getCartById(cartId);
-        Item item = itemRepository.findById(itemId)
-                .orElseThrow(() -> new Exception("Item not found with id " + itemId));
+    public void deleteAll() {
+        cartRepository.deleteAll();
+    }
 
-        cart.getItems().remove(item);
+   public Cart removeItemFromCart(Long cartId) throws Exception {
+        Cart cart = getCartById(cartId);
+
+
         cart.setTotalPrice(cart.getTotalPrice() - item.getPriceOfItem());
         return cartRepository.save(cart);
 
+    }*/
+
+  /*  public Long increaseCartQuantity(Long foodId) {
+        long quantity = 0;
+
+        Item items = itemService.getItemById(foodId);
+        Cart cart = new Cart();
+        if (items.getFoodId() == cart.getItems().getFoodId()) {
+
+            quantity++;
+        }
+        return quantity;
     }
+
+    public Long decreaseCartQuantity(Long Id) {
+
+        long quantity= getCartById(Id).getQuantity();
+
+        if(quantity>0)
+         {
+
+            quantity--;
+        }
+        return quantity;
+    }
+    public Long increaseCartQuantity1(Long Id) {
+
+        long quantity= getCartById(Id).getQuantity();
+
+
+
+
+            quantity++;
+
+        return quantity;
+    }*/
+
 }

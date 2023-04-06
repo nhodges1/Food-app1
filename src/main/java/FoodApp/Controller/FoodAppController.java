@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = {"http://localhost:4200"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:4200","http://localhost:3000"}, allowCredentials = "true")
 @RestController
 public class FoodAppController {
 
@@ -112,18 +112,27 @@ public class FoodAppController {
     }
 
 
-    @GetMapping("carts")
+    @GetMapping("/addToCart/{foodId}")
+
+    public Cart addToCart(@PathVariable(name="foodId") int foodId){
+        //  if(foodId!=null){
+
+        return cartService.addToCart(foodId);
+    }
+
+
+    @GetMapping("/allCarts")
     public List<Cart> getAllCarts() {
         return cartService.getAllCarts();
     }
 
-
+/*
     @GetMapping("cart/{id}")
-    public Cart getCartById(@PathVariable long id) throws Exception{
+    public Cart getCartById(@PathVariable int id) throws Exception{
         return  cartService.getCartById(id);
     }
 
-    @PostMapping("cart")
+   @PostMapping("cart")
     public Cart createCart(@RequestBody Cart cart) {
         return cartService.createCart(cart);
     }
@@ -133,11 +142,17 @@ public class FoodAppController {
         return cartService.addItemToCart(cartId, itemId);
     }
 
-    @DeleteMapping("cart/{cartId}/{itemId}")
-    public Cart removeItemFromCart(@PathVariable Long cartId, @PathVariable Long itemId)throws Exception {
-        return cartService.removeItemFromCart(cartId, itemId);
+    @DeleteMapping("cart/{Id}")
+    public void deleteCart(@PathVariable int Id){
+        cartService.deleteCart(Id);
+
     }
 
+    @DeleteMapping("deleteAllCart")
+    public void deleteAll(){
+
+        cartService.deleteAll();
+    }*/
 }
 
 
