@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@CrossOrigin(origins = {"http://34.226.210.109:9000", "http://172.31.90.30:4200", "http://3.82.138.218:4200"}, allowCredentials = "true")
+@CrossOrigin("*")
 @RestController
 public class FoodAppController {
 
